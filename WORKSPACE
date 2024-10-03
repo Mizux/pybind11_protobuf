@@ -1,6 +1,7 @@
 workspace(name = "com_google_pybind11_protobuf")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 http_archive(
     name = "bazel_skylib",
@@ -32,56 +33,45 @@ http_archive(
     ],
 )
 
-http_archive(
+git_repository(
     name = "rules_python",
-    sha256 = "c68bdc4fbec25de5b5493b8819cfc877c4ea299c0dcb15c244c5a00208cde311",
-    strip_prefix = "rules_python-0.31.0",
-    url = "https://github.com/bazelbuild/rules_python/releases/download/0.31.0/rules_python-0.31.0.tar.gz",
+    tag = "0.36.0",
+    remote = "https://github.com/bazelbuild/rules_python.git",
 )
-
-load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_multi_toolchains")
-
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
 py_repositories()
 
-
 DEFAULT_PYTHON = "3.12"
-
-python_register_multi_toolchains(
-    name = "python",
-    default_version = DEFAULT_PYTHON,
-    python_versions = [
-      "3.12",
-      "3.11",
-      "3.10",
-      "3.9",
-      "3.8"
-    ],
+python_register_toolchains(
+    name = "python3_12",
+    python_version = DEFAULT_PYTHON,
+    ignore_root_user_error=True,
 )
+load("@python3_12//:defs.bzl", "interpreter")
 
-
-load("@python//:pip.bzl", "multi_pip_parse")
-
-multi_pip_parse(
+load("@rules_python//python:pip.bzl", "pip_parse")
+pip_parse(
     name = "pypi",
-    default_version = DEFAULT_PYTHON,
-    python_interpreter_target = {
-        "3.12": "@python_3_12_host//:python",
-        "3.11": "@python_3_11_host//:python",
-        "3.10": "@python_3_10_host//:python",
-        "3.9": "@python_3_9_host//:python",
-        "3.8": "@python_3_8_host//:python",
-    },
-    requirements_lock = {
-        "3.12": "//pybind11_protobuf/requirements:requirements_lock_3_12.txt",
-        "3.11": "//pybind11_protobuf/requirements:requirements_lock_3_11.txt",
-        "3.10": "//pybind11_protobuf/requirements:requirements_lock_3_10.txt",
-        "3.9": "//pybind11_protobuf/requirements:requirements_lock_3_9.txt",
-        "3.8": "//pybind11_protobuf/requirements:requirements_lock_3_8.txt",
-    },
+    python_interpreter_target = interpreter,
+    requirements_lock = "//pybind11_protobuf/requirements:requirements_lock_3_12.txt",
+    #default_version = DEFAULT_PYTHON,
+    #python_interpreter_target = {
+    #    "3.12": "@python_3_12_host//:python",
+    #    "3.11": "@python_3_11_host//:python",
+    #    "3.10": "@python_3_10_host//:python",
+    #    "3.9": "@python_3_9_host//:python",
+    #    "3.8": "@python_3_8_host//:python",
+    #},
+    #requirements_lock = {
+    #    "3.12": "//pybind11_protobuf/requirements:requirements_lock_3_12.txt",
+    #    "3.11": "//pybind11_protobuf/requirements:requirements_lock_3_11.txt",
+    #    "3.10": "//pybind11_protobuf/requirements:requirements_lock_3_10.txt",
+    #    "3.9": "//pybind11_protobuf/requirements:requirements_lock_3_9.txt",
+    #    "3.8": "//pybind11_protobuf/requirements:requirements_lock_3_8.txt",
+    #},
 )
 
 load("@pypi//:requirements.bzl", "install_deps")
-
 install_deps()
 
 ## `pybind11_bazel` (PINNED)
