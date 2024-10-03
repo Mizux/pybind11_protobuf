@@ -44,7 +44,7 @@ load("@rules_python//python:repositories.bzl", "py_repositories", "python_regist
 py_repositories()
 
 
-DEFAULT_PYTHON = "3.11"
+DEFAULT_PYTHON = "3.12"
 
 python_register_multi_toolchains(
     name = "python",
