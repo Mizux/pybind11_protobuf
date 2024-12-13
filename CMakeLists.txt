@@ -27,7 +27,7 @@ include(CTest)
 # ============================================================================
 # Find Python
 
-find_package(Python COMPONENTS Interpreter Development)
+find_package(Python3 COMPONENTS Interpreter Development.Module)
 
 # ============================================================================
 # Build dependencies
@@ -88,7 +88,7 @@ pybind11_add_module(
 
 target_link_libraries(
   pybind11_proto_utils PRIVATE absl::strings protobuf::libprotobuf
-                               ${Python_LIBRARIES})
+                               Python3::Module)
 
 target_include_directories(
   pybind11_proto_utils PRIVATE ${PROJECT_SOURCE_DIR} ${protobuf_INCLUDE_DIRS}
@@ -116,10 +116,11 @@ target_link_libraries(
   absl::optional
   protobuf::libprotobuf
   pybind11::pybind11
-  ${Python_LIBRARIES})
+  Python3::Module)
 
 target_include_directories(
   pybind11_native_proto_caster
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   PRIVATE ${PROJECT_SOURCE_DIR} ${protobuf_INCLUDE_DIRS} ${protobuf_SOURCE_DIR}
           ${pybind11_INCLUDE_DIRS})
 
@@ -143,7 +144,7 @@ target_link_libraries(
   absl::optional
   protobuf::libprotobuf
   pybind11::pybind11
-  ${Python_LIBRARIES})
+  Python3::Module)
 
 target_include_directories(
   pybind11_wrapped_proto_caster
