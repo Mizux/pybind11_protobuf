@@ -73,6 +73,14 @@ generate_extension(regression_wrappers "pybind11_native_proto_caster")
 generate_extension(we_love_dashes_cc_only #
                    "we-love-dashes_cc_proto;pybind11_native_proto_caster")
 
+if(NOT DEFINED Python_EXECUTABLE)
+  if(NOT DEFINED PYBIND11_PYTHON_EXECUTABLE_LAST)
+    set(Python_EXECUTABLE ${PYTHON_EXECUTABLE})
+  else()
+    set(Python_EXECUTABLE ${PYBIND11_PYTHON_EXECUTABLE_LAST})
+  endif()
+endif()
+
 function(add_py_test testname)
   add_test(NAME ${testname}_test
            COMMAND ${Python_EXECUTABLE}
