@@ -36,12 +36,12 @@ if(USE_SYSTEM_ABSEIL)
   # Version omitted, as absl only allows EXACT version matches
   set(_absl_package_args REQUIRED)
 else()
-  set(_absl_package_args 20230125)
+  set(_absl_package_args 20240722)
 endif()
 if(USE_SYSTEM_PROTOBUF)
-  set(_protobuf_package_args 4.23.3 REQUIRED)
+  set(_protobuf_package_args 5.29.1 REQUIRED)
 else()
-  set(_protobuf_package_args 4.23.3)
+  set(_protobuf_package_args 5.29.1)
 endif()
 if(USE_SYSTEM_PYBIND)
   set(_pybind11_package_args 2.11.1 REQUIRED)
@@ -49,21 +49,19 @@ else()
   set(_pybind11_package_args 2.11.1)
 endif()
 
-set(ABSL_PROPAGATE_CXX_STD ON)
-set(ABSL_ENABLE_INSTALL ON)
 
 include(FetchContent)
 FetchContent_Declare(
   absl
   GIT_REPOSITORY "https://github.com/abseil/abseil-cpp.git"
-  GIT_TAG 20230125.3
+  GIT_TAG 20240722.0
   FIND_PACKAGE_ARGS ${_absl_package_args} NAMES absl)
 
 # cmake-format: off
 FetchContent_Declare(
   Protobuf
   GIT_REPOSITORY "https://github.com/protocolbuffers/protobuf.git"
-  GIT_TAG v23.3
+  GIT_TAG v29.1
   GIT_SUBMODULES ""
   FIND_PACKAGE_ARGS ${_protobuf_package_args} NAMES protobuf)
 set(protobuf_BUILD_TESTS OFF CACHE INTERNAL "")
@@ -77,6 +75,9 @@ FetchContent_Declare(
 
 message(CHECK_START "Checking for external dependencies")
 list(APPEND CMAKE_MESSAGE_INDENT "  ")
+
+set(ABSL_PROPAGATE_CXX_STD ON)
+set(ABSL_ENABLE_INSTALL ON)
 FetchContent_MakeAvailable(absl Protobuf pybind11)
 list(POP_BACK CMAKE_MESSAGE_INDENT)
 
