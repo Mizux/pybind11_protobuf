@@ -1,5 +1,7 @@
 # Pybind11 bindings for Google's Protocol Buffers
 
+[![build_and_test](./../../actions/workflows/ubuntu-build.yml/badge.svg)](./../../actions/workflows/ubuntu-build.yml)
+
 [TOC]
 
 ## Overview
