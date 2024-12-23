@@ -11,3 +11,6 @@ build --host_cxxopt=-std=c++17
 # Enable logging error output.
 test --test_output=errors
 test --test_summary=detailed
+
+# https://bazel.build/configure/best-practices#bazelrc-file
+try-import %workspace%/user.bazelrc

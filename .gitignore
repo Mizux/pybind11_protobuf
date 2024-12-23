@@ -2,4 +2,5 @@
 /build
 /tmp_build
 
-*.swp
+user.bazelrc
+.*.swp
