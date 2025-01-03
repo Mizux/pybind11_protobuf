@@ -28,7 +28,7 @@ git_repository(
     remote = "https://github.com/bazelbuild/platforms.git",
 )
 
-## `abseil-cpp`
+## abseil-cpp
 # https://github.com/abseil/abseil-cpp
 ## Abseil-cpp
 git_repository(
@@ -119,25 +119,24 @@ new_git_repository(
 
 # proto_library, cc_proto_library, and java_proto_library rules implicitly
 # depend on @com_google_protobuf for protoc and proto runtimes.
-# This statement defines the @com_google_protobuf repo.
-http_archive(
+git_repository(
     name = "com_google_protobuf",
-    sha256 = "d19643d265b978383352b3143f04c0641eea75a75235c111cc01a1350173180e",
-    strip_prefix = "protobuf-25.3",
-    urls = ["https://github.com/protocolbuffers/protobuf/releases/download/v25.3/protobuf-25.3.tar.gz"],
+    commit = "233098326bc268fc03b28725c941519fc77703e6",
+    #tag = "v29.2",
+    remote = "https://github.com/protocolbuffers/protobuf.git",
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 protobuf_deps()
 
-# GRPC v1.42, for proto rules.
+# GRPC, for proto rules.
 # For a related discussion of the pro/cons of various open-source py proto rule
 # repositories, see b/189457935.
-http_archive(
+git_repository(
     name = "com_github_grpc_grpc",
-    sha256 = "84e31a77017911b2f1647ecadb0172671d96049ea9ad5109f02b4717c0f03702",
-    strip_prefix = "grpc-1.56.3",
-    urls = ["https://github.com/grpc/grpc/archive/refs/tags/v1.56.3.tar.gz"],
+    commit = "d3286610f703a339149c3f9be69f0d7d0abb130a",
+    #tag = "v1.67.1",
+    remote = "https://github.com/grpc/grpc.git",
 )
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
