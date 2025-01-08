@@ -25,6 +25,7 @@ option(USE_SYSTEM_PYBIND "Force usage of system provided pybind11" OFF)
 # ============================================================================
 # Testing
 include(CTest)
+option(PYBIND11_PROTOBUF_BUILD_TESTING "If ON, build all of pybind11_protobuf's own tests." ${BUILD_TESTING})
 
 # ============================================================================
 # Find Python

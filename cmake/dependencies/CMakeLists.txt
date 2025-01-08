@@ -64,5 +64,19 @@ if(NOT TARGET pybind11::pybind11_headers)
   endif()
 endif()
 
+if(PYBIND11_PROTOBUF_BUILD_TESTING AND NOT TARGET pybind11_abseil::absl_casters)
+  message(CHECK_START "Fetching pybind11_abseil")
+  list(APPEND CMAKE_MESSAGE_INDENT "  ")
+  FetchContent_Declare(
+    pybind11_abseil
+    # TODO: replace by pybind/pybind_abseil once merged upstream
+    GIT_REPOSITORY "https://github.com/mizux/pybind11_abseil.git"
+    GIT_TAG "master"
+    GIT_SHALLOW TRUE)
+  FetchContent_MakeAvailable(pybind11_abseil)
+  list(POP_BACK CMAKE_MESSAGE_INDENT)
+  message(CHECK_PASS "fetched")
+endif()
+
 list(POP_BACK CMAKE_MESSAGE_INDENT)
 message(CHECK_PASS "all dependencies found")

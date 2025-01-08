@@ -231,6 +231,9 @@ pybind_extension(
     deps = [
         ":test_cc_proto",
         "//pybind11_protobuf:native_proto_caster",
+        "@pybind11_abseil//pybind11_abseil:absl_casters",
+        "@com_google_absl//absl/types:optional",
+        "@com_google_absl//absl/types:variant",
         "@com_google_protobuf//:protobuf",
     ],
 )
@@ -297,6 +300,7 @@ pybind_extension(
     deps = [
         ":test_cc_proto",
         "//pybind11_protobuf:native_proto_caster",
+        "@pybind11_abseil//pybind11_abseil:absl_casters",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/time",
     ],
