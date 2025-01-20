@@ -12,8 +12,8 @@ if(NOT TARGET absl::base)
   else()
     message(CHECK_START "Fetching Abseil-cpp")
     list(APPEND CMAKE_MESSAGE_INDENT "  ")
-    # ensure that abseil also installs itself, since we are using it in our public
-    # API
+    # ensure that abseil also installs itself, since we are using it in our
+    # public API
     set(ABSL_ENABLE_INSTALL ON)
     set(ABSL_PROPAGATE_CXX_STD ON)
     set(ABSL_USE_SYSTEM_INCLUDES ON)
