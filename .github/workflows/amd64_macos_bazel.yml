@@ -67,3 +67,9 @@ jobs:
           --subcommands=pretty_print
           --enable_bzlmod
           //...
+
+  amd64_macos_bazel:
+    runs-on: ubuntu-latest
+    needs: native
+    steps:
+      - uses: actions/checkout@v4
