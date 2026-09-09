@@ -1,0 +1,23 @@
+# Enable logging rc options.
+common --announce_rc
+
+# Enable Bzlmod for every Bazel command
+common --enable_bzlmod
+
+# Fix the python version to 3.12 (matching main)
+build --@rules_python//python/config_settings:python_version=3.12
+
+# Output errors on test failure
+test --test_output=errors
+
+###############################################################################
+# Options for continuous integration.
+###############################################################################
+build:ci --copt=-O1
+build:ci --keep_going
+test:ci --test_output=all
+
+###############################################################################
+# Put user-specific options in user.bazelrc
+###############################################################################
+try-import %workspace%/user.bazelrc
